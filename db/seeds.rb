@@ -11,7 +11,7 @@ states = [
   { abbr: 'AL', name: 'Alabama', districts: 7 },
   { abbr: 'AR', name: 'Arkansas', districts: 4 },
   { abbr: 'AZ', name: 'Arizona', districts: 9 },
-  { abbr: 'CA', name: ',California', districts: 53 },
+  { abbr: 'CA', name: 'California', districts: 53 },
   { abbr: 'CO', name: 'Colorado', districts: 7 },
   { abbr: 'CT', name: 'Connecticut', districts: 5 },
   { abbr: 'DE', name: 'Delaware', districts: 1 },
@@ -60,9 +60,9 @@ states = [
 ]
 
 states.each do |s|
-  st = State.create!({ abbr: s.abbr, name: s.name })
+  st = State.create!({ abbr: s[:abbr], name: s[:name] })
   i = 1
-  num = state.districts
+  num = s[:districts]
   while i <= num  do
     st.districts.create!(number: i)
     i +=1
