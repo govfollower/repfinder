@@ -12,13 +12,19 @@ class FindDistrict extends React.Component {
   }
 
   fetchStates () {
-    axios.get( `api/states` )
-        .then(response => {
-          this.setState({ states: response.data });
-        })
-        .catch(error => {
-          console.error(error);
-        });
+    axios({
+      // baseURL: `http://api.${window.location.host}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      url: '/v1/states'
+    })
+      .then(response => {
+        this.setState({ states: response.data });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   fetchDistricts(stateId) {
@@ -56,10 +62,16 @@ class FindDistrict extends React.Component {
   render () {
     // const nextQuoteId = Number(this.state.quote.id) + 1;
 
+    var states = this.state.states
+    console.log(states)
     return (
       <div>
         <select>
-          <option>Some Option</option>
+          {
+            states.map((state) => {
+              return <option key={state.id} value={state.id}>{state.name}</option>
+            })
+          }
         </select>
         <Link to={`districts/29`}>Next</Link>
       </div>
