@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # temp routes to avoid cross-origin-access-control header in web app
   get '/v1/states', to: "api/v1/states#index"
-  get '/v1/states/:state_id/districts', to: "api/v1/districts#index"
+  get '/v1/states/:state_id/districts', to: "api/v1/states#districts"
 
   constraints :subdomain => "api" do
     scope :module => "api", :as => "api" do

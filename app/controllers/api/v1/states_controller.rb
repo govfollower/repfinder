@@ -9,6 +9,11 @@ module Api
         render json: states, status: 200
       end
 
+
+      def districts
+        districts = District.where(state_id: params[:state_id]).order(:number)
+        render json: districts, status: 200
+      end 
     end
   end
 end

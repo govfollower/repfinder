@@ -7,8 +7,11 @@ class FindDistrict extends React.Component {
   constructor () {
     super();
     this.state = {
-      states: []
+      states: [],
+      districts: []
     };
+    // This binding is necessary to make `this` work in the callback
+    this.fetchDistricts = this.fetchDistricts.bind(this); 
   }
 
   fetchStates () {
@@ -27,14 +30,21 @@ class FindDistrict extends React.Component {
       });
   }
 
-  fetchDistricts(stateId) {
-    axios.get( `api/states/${stateId}/districts` )
-        .then(response => {
-          this.setState({ districts: response.data });
-        })
-        .catch(error => {
-          console.error(error);
-        });
+  fetchDistricts (e) {
+    var stateId = e.target.value
+    console.log(stateId)
+    axios({
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      url: `/v1/states/${stateId}/districts`
+    })
+      .then(response => {
+        this.setState({ districts: response.data });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   // setQuoteIdFromQueryString (qs) {
@@ -60,19 +70,27 @@ class FindDistrict extends React.Component {
   }
 
   render () {
-    // const nextQuoteId = Number(this.state.quote.id) + 1;
-
     var states = this.state.states
-    console.log(states)
+    var districts = this.state.districts
+
     return (
       <div>
-        <select>
+        <select onChange={this.fetchDistricts}>
           {
             states.map((state) => {
               return <option key={state.id} value={state.id}>{state.name}</option>
             })
           }
         </select>
+        <h3>Districts</h3>
+        <select>
+          {
+            districts.map((district) => {
+              return <option key={district.id} value={district.id}>{district.number}</option>
+            })
+          }
+        </select>
+
         <Link to={`districts/29`}>Next</Link>
       </div>
     );
