@@ -10,7 +10,6 @@ import ShowDistrict from './ShowDistrict'
 
 const App = (props) => (
   <Router>
-  <div>
     <Switch>
       <Route
         exact path='/'
@@ -25,7 +24,6 @@ const App = (props) => (
         component={ShowDistrict}
       />
     </Switch>
-  </div>
   </Router>
 )
 
