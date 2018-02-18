@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import Intro from './Intro'
 import FindDistrict from './FindDistrict'
+import ShowDistrict from './ShowDistrict'
 
 const App = (props) => (
   <Router>
@@ -16,6 +17,10 @@ const App = (props) => (
     <Route
       path='/find-district'
       component={FindDistrict}
+    />
+    <Route
+      path='/districts/:districtId'
+      component={ShowDistrict}
     />
   </div>
   </Router>

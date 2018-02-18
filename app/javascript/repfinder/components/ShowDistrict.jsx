@@ -3,57 +3,44 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import axios from 'axios';
 
-class Intro extends React.Component {
+class ShowDistrict extends React.Component {
   constructor () {
     super();
     this.state = {
-      quote: {}
+      reps: {}
     };
   }
 
-  fetchStates (id) {
-    axios.get( `api/states` )
-        .then(response => {
-          this.setState({ states: response.data });
-        })
-        .catch(error => {
-          console.error(error);
-        });
-  }
+  fetchReps() {
+    var districtId = this.props.match.params.districtId
 
-  setQuoteIdFromQueryString (qs) {
-    this.qsParams = queryString.parse(qs);
-    if (this.qsParams.quote) {
-      // assign quote ID from the URL's query string
-      this.quoteId = Number(this.qsParams.quote);
-    } else {
-      this.quoteId = 1;
-      // update URL in browser to reflect current quote in query string
-      this.props.history.push(`/?quote=${this.quoteId}`);
-    }
+    axios({
+      // baseURL: `http://api.${window.location.host}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      url: `/v1/districts/${districtId}/reps`
+    })
+      .then(response => {
+        this.setState({ reps: response.data });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   componentDidMount () {
-    this.setQuoteIdFromQueryString(this.props.location.search);
-    this.fetchQuote(this.quoteId);
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.setQuoteIdFromQueryString(nextProps.location.search);
-    this.fetchQuote(this.quoteId);
+    this.fetchReps();
   }
 
   render () {
-    const nextQuoteId = Number(this.state.quote.id) + 1;
 
     return (
       <div>
-        <Link to={`/?quote=${nextQuoteId}`}>Next</Link>
-        <p>{this.state.quote.text}</p>
-        <p>{this.state.quote.author}</p>
+        <p>Hellow world!</p>
       </div>
     );
   }
 }
 
-export default Intro;
+export default ShowDistrict;

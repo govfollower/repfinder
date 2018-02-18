@@ -11,7 +11,8 @@ class FindDistrict extends React.Component {
       districts: []
     };
     // This binding is necessary to make `this` work in the callback
-    this.fetchDistricts = this.fetchDistricts.bind(this); 
+    this.fetchDistricts = this.fetchDistricts.bind(this);
+    this.setDistrictId = this.setDistrictId.bind(this);
   }
 
   fetchStates () {
@@ -32,7 +33,6 @@ class FindDistrict extends React.Component {
 
   fetchDistricts (e) {
     var stateId = e.target.value
-    console.log(stateId)
     axios({
       headers: {
         'Content-Type': 'application/json'
@@ -45,6 +45,13 @@ class FindDistrict extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  setDistrictId (e) {
+    var districtId = e.target.value
+    this.setState({
+      districtId: districtId
+    })
   }
 
   // setQuoteIdFromQueryString (qs) {
@@ -72,6 +79,7 @@ class FindDistrict extends React.Component {
   render () {
     var states = this.state.states
     var districts = this.state.districts
+    var districtId = this.state.districtId
 
     return (
       <div>
@@ -83,15 +91,16 @@ class FindDistrict extends React.Component {
           }
         </select>
         <h3>Districts</h3>
-        <select>
+        <select onChange={this.setDistrictId}>
           {
             districts.map((district) => {
               return <option key={district.id} value={district.id}>{district.number}</option>
             })
           }
         </select>
-
-        <Link to={`districts/29`}>Next</Link>
+        {
+          districtId ? <a href={'/districts/' + districtId}>Next</a> : ''
+        }
       </div>
     );
   }

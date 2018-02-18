@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204194157) do
+ActiveRecord::Schema.define(version: 20180218014003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,52 @@ ActiveRecord::Schema.define(version: 20180204194157) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["state_id"], name: "index_districts_on_state_id"
+  end
+
+  create_table "house_reps", force: :cascade do |t|
+    t.bigint "district_id"
+    t.string "propublica_id"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.string "gender"
+    t.date "dob"
+    t.string "party"
+    t.boolean "in_office"
+    t.integer "reelection_year"
+    t.integer "first_elected_year"
+    t.integer "terms_served"
+    t.string "phone"
+    t.string "website_url"
+    t.string "contact_form_url"
+    t.string "twitter_account"
+    t.string "facebook_account"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_house_reps_on_district_id"
+  end
+
+  create_table "senate_reps", force: :cascade do |t|
+    t.bigint "state_id"
+    t.string "propublica_id"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.string "gender"
+    t.date "dob"
+    t.string "party"
+    t.boolean "in_office"
+    t.integer "reelection_year"
+    t.integer "first_elected_year"
+    t.integer "terms_served"
+    t.string "phone"
+    t.string "website_url"
+    t.string "contact_form_url"
+    t.string "twitter_account"
+    t.string "facebook_account"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["state_id"], name: "index_senate_reps_on_state_id"
   end
 
   create_table "states", force: :cascade do |t|
