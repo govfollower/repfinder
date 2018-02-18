@@ -7,7 +7,10 @@ class ShowDistrict extends React.Component {
   constructor () {
     super();
     this.state = {
-      reps: {}
+      district: {},
+      house: {},
+      senate: [],
+      state: {}
     };
   }
 
@@ -22,7 +25,7 @@ class ShowDistrict extends React.Component {
       url: `/v1/districts/${districtId}/reps`
     })
       .then(response => {
-        this.setState({ reps: response.data });
+        this.setState(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -34,10 +37,39 @@ class ShowDistrict extends React.Component {
   }
 
   render () {
+    var district = this.state.district
+    var house = this.state.house
+    var senate = this.state.senate
+    var state = this.state.state
 
     return (
       <div>
-        <p>Hellow world!</p>
+        <div>
+          <h2>District {district.number}</h2>
+          <h3>{state.name}</h3>
+        </div>
+        <div>
+          <h5>House</h5>
+          <h4>{house.first_name} {house.middle_name} {house.last_name}</h4>
+          <p>Party: {house.party}</p>
+          <p>DOB: {house.dob}</p>
+          <p>Phone: {house.phone}</p>
+          <p>Reelection year: {house.reelection_year}</p>
+        </div>
+        {
+          senate.map(rep => {
+            return (
+              <div key={rep.id}>
+                <h4>{rep.first_name} {rep.middle_name} {rep.last_name}</h4>
+                <p>Party: {rep.party}</p>
+                <p>DOB: {rep.dob}</p>
+                <p>Phone: {rep.phone}</p>
+                <p>Reelection year: {rep.reelection_year}</p>
+              </div>
+            )
+          })
+        }
+        <a href="/find-district">Change District</a>
       </div>
     );
   }

@@ -3,6 +3,7 @@ class SenateRep < ApplicationRecord
 
   def as_representative
     {
+      id: id,
       first_name: first_name,
       middle_name: middle_name,
       last_name: last_name,

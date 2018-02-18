@@ -98,9 +98,11 @@ class FindDistrict extends React.Component {
             })
           }
         </select>
+        <div>
         {
           districtId ? <a href={'/districts/' + districtId}>Next</a> : ''
         }
+        </div>
       </div>
     );
   }
