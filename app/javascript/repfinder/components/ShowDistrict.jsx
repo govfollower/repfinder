@@ -56,19 +56,22 @@ class ShowDistrict extends React.Component {
           <p>Phone: {house.phone}</p>
           <p>Reelection year: {house.reelection_year}</p>
         </div>
-        {
-          senate.map(rep => {
-            return (
-              <div key={rep.id}>
-                <h4>{rep.first_name} {rep.middle_name} {rep.last_name}</h4>
-                <p>Party: {rep.party}</p>
-                <p>DOB: {rep.dob}</p>
-                <p>Phone: {rep.phone}</p>
-                <p>Reelection year: {rep.reelection_year}</p>
-              </div>
-            )
-          })
-        }
+        <div>
+          <h5>Senate</h5>
+          {
+            senate.map(rep => {
+              return (
+                <div key={rep.id}>
+                  <h4>{rep.first_name} {rep.middle_name} {rep.last_name}</h4>
+                  <p>Party: {rep.party}</p>
+                  <p>DOB: {rep.dob}</p>
+                  <p>Phone: {rep.phone}</p>
+                  <p>Reelection year: {rep.reelection_year}</p>
+                </div>
+              )
+            })
+          }
+        </div>
         <a href="/find-district">Change District</a>
       </div>
     );
