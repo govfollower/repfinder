@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/v1/districts', to: 'api/v1/districts#index'
   get '/v1/states/:state_id/districts', to: 'api/v1/states#districts'
   get '/v1/districts/:district_id/reps', to: 'api/v1/districts#reps'
-  get '/v1/districts/address', to: 'api/v1/districts#address' 
+  post '/v1/districts/address', to: 'api/v1/districts#address' 
 
   constraints :subdomain => 'api' do
     scope :module => 'api', :as => 'api' do

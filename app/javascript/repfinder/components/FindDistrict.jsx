@@ -11,6 +11,7 @@ class FindDistrict extends React.Component {
       allStates: [],
       addressCity: '',
       addressStreet: '',
+      addressState: '',
       selDistrict: {},
       selState: {}
     };
@@ -19,6 +20,9 @@ class FindDistrict extends React.Component {
     this.handleAddressSubmit = this.handleAddressSubmit.bind(this);
     this.selectState = this.selectState.bind(this);
     this.selectDistrict = this.selectDistrict.bind(this);
+    this.updateCity = this.updateCity.bind(this);
+    this.updateState = this.updateState.bind(this);
+    this.updateStreet = this.updateStreet.bind(this);
   }
 
   getStates () {
@@ -59,9 +63,19 @@ class FindDistrict extends React.Component {
 
   handleAddressSubmit (e) {
     e.preventDefault()
-    console.log(e, e.target, e.target.value)
-    var form = e.target.formSerialize()
-    console.log(form) 
+
+    axios.post('/v1/districts/address', {
+      street: this.state.addressStreet,
+      city: this.state.addressCity,
+      state: this.state.addressState
+    })
+    .then(res => {
+      console.log(this)
+      this.props.history.push('/districts/' + res.data.id)
+    }, this)
+    .catch(function (error) {
+      console.log(error);
+    })
   }
 
   selectState (e) {
@@ -74,7 +88,8 @@ class FindDistrict extends React.Component {
     })
     this.setState({
       selState: selState,
-      selDistrict: stateDistricts[0]
+      selDistrict: stateDistricts[0],
+      addressState: selState.abbr
     });
   }
 
@@ -85,6 +100,27 @@ class FindDistrict extends React.Component {
     })
     this.setState({
       selDistrict: selDistrict
+    })
+  }
+
+  updateState(e) {
+    var state = e.target.value
+    this.setState({
+      addressState: state
+    })
+  }
+
+  updateStreet(e) {
+    var street = e.target.value
+    this.setState({
+      addressStreet: street
+    })
+  }
+
+  updateCity(e) {
+    var city = e.target.value
+    this.setState({
+      addressCity: city 
     })
   }
 
@@ -116,10 +152,10 @@ class FindDistrict extends React.Component {
             })
           }
         </select>
-        <h3>Districts</h3>
           {
             filDistricts.length > 1 ? (
               <div>
+                <h3>Districts</h3>
                 <p>{selState.name} has {filDistricts.length} districts in the House. Please select your district.</p> 
                 <select onChange={this.selectDistrict}>
                   {
@@ -130,32 +166,37 @@ class FindDistrict extends React.Component {
                 </select>
                 <div>
                   {
-                    selDistrict.id ? <a href={'/districts/' + selDistrict.id}>View Representatives for {selState.name} District {selDistrict.number}</a> : ''
+                    selDistrict.id ? <a href={'/districts/' + selDistrict.id}>View Representatives for {selState.abbr} District {selDistrict.number}</a> : ''
                   }
                 </div>
 
                 <p><strong>Don't know your district?</strong></p>
                 <p>Your district is based on the address you use when you register to vote. You can use the form below to lookup your district.</p>
-                <p>Here are some additional resources to help you find your district:</p>
-                <p>Map</p>
-                <p>Census.gov link</p>
                 <form onSubmit={this.handleAddressSubmit}>
                   <div>
-                    <p><label>Street (e.g. 123 Main St)</label></p>
-                    <input type="text" name="street" />
+                    <p><label>Street</label></p>
+                    <input type="text" name="street" placeholder="e.g. 123 Main St" onChange={this.updateStreet} value={this.state.addressStreet} />
                   </div>
                   <div>
-                    <p><label>City (e.g. Los Angeles)</label></p>
-                    <input type="text" name="city" />
+                    <p><label>City</label></p>
+                    <input type="text" name="city" placeholder="e.g. Los Angeles"  onChange={this.updateCity} value={this.state.addressCity} />
                   </div>
                   <div>
-                    <input type="hidden" value={selState.abbr} name="state"/>
+                    <p><label>State</label></p>
+                    <input type="text" name="state" placeholder="e.g. CA"  onChange={this.updateState} value={this.state.addressState} />
                   </div>
+ 
                   <div>
                     <input type="submit" value="Submit" />
                   </div>
                 </form>
               </div>
+            ) : ''
+          }
+
+          {
+            filDistricts.length === 1 ? (
+              selDistrict.id ? <div><a href={'/districts/' + selDistrict.id}>View Representatives for {selState.name}</a></div> : ''
             ) : ''
           }
       </div>
