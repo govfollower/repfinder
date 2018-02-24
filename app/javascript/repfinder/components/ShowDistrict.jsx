@@ -47,6 +47,7 @@ class ShowDistrict extends React.Component {
         <div>
           <h2>District {district.number}</h2>
           <h3>{state.name}</h3>
+          <img src={'/v1/states/' + state.id + '/image'} />
         </div>
         <div>
           <h5>House</h5>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # temp routes to avoid cross-origin-access-control header in web app
   get '/v1/states', to: 'api/v1/states#index'
+  get '/v1/states/:state_id/image', to: 'api/v1/states#image'
   get '/v1/districts', to: 'api/v1/districts#index'
   get '/v1/states/:state_id/districts', to: 'api/v1/states#districts'
   get '/v1/districts/:district_id/reps', to: 'api/v1/districts#reps'

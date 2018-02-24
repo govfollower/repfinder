@@ -153,6 +153,9 @@ class FindDistrict extends React.Component {
           }
         </select>
           {
+            selState.id ? <img src={'/v1/states/' + selState.id + '/image'} /> : ''
+          }
+          {
             filDistricts.length > 1 ? (
               <div>
                 <h3>Districts</h3>
