@@ -17,5 +17,7 @@ module Repfinder
 
     # Load services directory
     config.autoload_paths << Rails.root.join('app', 'services')
+    # Load font assets
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end
