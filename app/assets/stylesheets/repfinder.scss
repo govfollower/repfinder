@@ -1,0 +1,42 @@
+
+// colors
+$blue: #2e3192;
+$red: #e20c0d;
+$white: #f7f7fe;
+
+body {
+  font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+}
+
+.h1 {
+  font-family: 'ArchivoBlack', 'Helvetica';
+  font-weight: 400;
+}
+
+p {
+
+}
+
+.button {
+  background: $red;
+  border-radius: 3px;
+  color: #fff;
+  font-family: 'ArchivoBlack', 'Helvetica';
+  padding: 0.75em 2em;
+  text-decoration: none;
+  text-transform: uppercase; 
+}
+
+.intro {
+    text-align: center;
+
+    .h1, p {
+      color: $blue;
+    }
+    
+    .button {
+      display: inline-block;
+      margin: 1em 0;
+    }
+}
+
